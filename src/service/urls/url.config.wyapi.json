@@ -1,0 +1,10 @@
+{
+  "module": "wyapi",
+  "v1": {
+    "SendSMSCode": "/sendSms.do",
+    "Signup": "/signup.do",
+    "Signin": "/signin.do",
+    "SaveRegisterInfo": "/saveRegisterInfo.do",
+    "ChangePassword": "/changePassword.do"
+  }
+}
