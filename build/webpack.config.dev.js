@@ -24,6 +24,7 @@ export default {
   devtool: 'eval',
   entry: {
     app: [
+    'es6-promise',
     'babel-polyfill',
     './src/app.js'
   ]},

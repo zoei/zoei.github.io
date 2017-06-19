@@ -10,6 +10,8 @@
       flex 1
       border: solid 1px #ededed;
       overflow auto
+      font-size 18px
+      color: #333;
     .md-preview
       flex 1
       overflow auto
@@ -19,16 +21,17 @@
   <div class="page-home">
     <div class="md-editor">
       <textarea v-model="mdtext" class="md-input"/>
-      <pre class="md-preview"><code class="language-markdown" ref="md"></code></pre>
+      <div class="md-preview"><div class="markdown" ref="md"></div></div>
     </div>
   </div>
 </template>
 
 <script>
+      // <pre class="md-preview"><code class="markdown" ref="md"></code></pre>
   import { mapState } from 'vuex'
-  import { MessageBox } from 'mint-ui'
+  // import { MessageBox } from 'mint-ui'
   import marked from 'marked'
-  // import hljs from 'highlight.js'
+  import hljs from 'highlight.js'
   // import Prism from 'prismjs'
 
   export default {
@@ -53,9 +56,9 @@
         sanitize: true,
         smartLists: true,
         smartypants: false,
-        highlight: function (code, lang) {
-          return Prism.highlight(code, Prism.languages[lang])
-          // return hljs.highlightAuto(code).value
+        highlight: function (code, lang = 'bash') {
+          // return Prism.highlight(code, Prism.languages[lang])
+          return hljs.highlightAuto(code).value
         }
       })
     },

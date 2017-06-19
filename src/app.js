@@ -19,11 +19,15 @@ import {
 
 import App from './App.vue'
 import Home from './pages/Home.vue'
+import Upload from './pages/Upload.vue'
+import Cos from './pages/Cos.vue'
 
 import './styles/app.styl'
 
 const routes = [
-  { path: '/', component: Home }
+  { path: '/', component: Home },
+  { path: '/upload', component: Upload },
+  { path: '/cos', component: Cos }
 ]
 
 Vue.component(Button.name, Button)
