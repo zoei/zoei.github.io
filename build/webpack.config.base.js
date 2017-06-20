@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import path from 'path'
 import webpack from 'webpack'
 import poststylus from 'poststylus'
@@ -11,20 +10,7 @@ export const loaders = {
     exclude: /node_modules/,
     use: [
       {
-        loader: 'babel-loader',
-        options: {
-          presets: ["vue-app", "stage-0", "stage-3"],
-          plugins: [
-            "transform-runtime",
-            "transform-decorators-legacy",
-            ["component", [
-              {
-                "libraryName": "mint-ui",
-                "style": true
-              }
-            ]]
-          ]
-        }
+        loader: 'babel-loader'
       }
     ]
   },
@@ -117,9 +103,9 @@ export const loaders = {
   },
 }
 export default {
-  // context: path.resolve(__dirname, '..'),
+  context: path.resolve(__dirname, '..'),
   entry: {
-    app: './src/app.js'
+    app: ['babel-polyfill', './app/app.js']
   },
   output: {
     path: './dist',

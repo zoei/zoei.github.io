@@ -4,24 +4,34 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+const nodeExternals = require('webpack-node-externals')
+const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 import config from './webpack.config.base'
 import pkg from '../package.json'
 
 const OUTPUT_DIR = path.resolve('./static')
-const PUBLIC_PATH = '/static'
+const PUBLIC_PATH = '/'
 
 export default {
   ...config,
   entry: {
-    app: ['es6-promise/auto', 'babel-polyfill', './app/entry-client.js']
+    app: ['babel-polyfill', './app/entry-server.js']
   },
+  target: 'node',
+  devtool: 'source-map',
   output: {
     ...config.output,
     path: OUTPUT_DIR,
     publicPath: PUBLIC_PATH,
-    filename: '[chunkhash].js'
+    filename: '[chunkhash].js',
+    libraryTarget: 'commonjs2'
   },
+  externals: nodeExternals({
+    // do not externalize dependencies that need to be processed by webpack.
+    // you can add more file types here e.g. raw *.vue files
+    // you should also whitelist deps that modifies `global` (e.g. polyfills)
+    whitelist: /\.css$/
+  }),
   plugins: [
     // new CleanWebpackPlugin([path.basename(OUTPUT_DIR)], {
     //   root: path.dirname(OUTPUT_DIR)
@@ -35,15 +45,12 @@ export default {
       }
     }),
     ...config.plugins,
+    new VueSSRServerPlugin(),
     new ExtractTextPlugin({ filename: '[chunkhash].css', allChunks: true }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest'
-    }),
-    new VueSSRClientPlugin(),
     // new webpack.optimize.UglifyJsPlugin({
     //   // 最紧凑的输出
     //   beautify: false,
@@ -61,12 +68,6 @@ export default {
     //     reduce_vars: true
     //   }
     // }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './template.release.html',
-      inject: 'body',
-      hash: true
-    }),
     new CopyWebpackPlugin([
       // { from: './statics', to: 'statics' }
     ])

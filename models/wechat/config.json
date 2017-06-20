@@ -1,0 +1,14 @@
+{
+  "zoei.cc": {
+    "token": "zoei",
+    "EncodingAESKey": "XOPqtlT3Be3hFkeTSgYmowMb8TBqGsZbK8ntasB1yrQ",
+    "AppID": "wx01182dc42c4b0f75",
+    "AppSecret": "3e66f6bd5c5048307361df826aefe1ce"
+  },
+  "test": {
+    "token": "zoei",
+    "EncodingAESKey": "XOPqtlT3Be3hFkeTSgYmowMb8TBqGsZbK8ntasB1yrQ",
+    "AppID": "wxb1e15dc25e06a5b5",
+    "AppSecret": "d005b1c83b7ef36f904dd2d25e4e9966"
+  }
+}

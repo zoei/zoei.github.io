@@ -6,7 +6,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const HOST = process.env.HOST || '0.0.0.0'
 const PORT = process.env.PORT || 18080 
-const PUBLIC_PATH = process.env.path || '/dist'
+const PUBLIC_PATH = process.env.path || ''
 
 export default {
   ...config,
@@ -24,9 +24,9 @@ export default {
   devtool: 'eval',
   entry: {
     app: [
-    'es6-promise',
+    'es6-promise/auto',
     'babel-polyfill',
-    './src/app.js'
+    './app/entry-client.js'
   ]},
   output: {
     ...config.output,

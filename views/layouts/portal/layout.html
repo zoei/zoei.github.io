@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script type="text/javascript">
+    window.__INITIAL_STATE__ = {{initialState | safe}}
+    window.GDATA = {{GDATA | safe}}
+  </script>
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+  {% include "./header.html" %}
+  <div id="root">
+    {% block body %}{% endblock %}
+  </div>
+  {% include "./footer.html" %}
+  <script src="/bundles/{{bundle.portal_js}}"></script>
+</body>
+</html>
