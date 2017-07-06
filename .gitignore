@@ -9,3 +9,4 @@ dist/
 fe-portal
 settings.json
 static/*/
+db/data/

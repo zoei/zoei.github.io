@@ -5,24 +5,24 @@ const datastore = require('nedb-promise')
 let db = {}
 
 db.common = datastore({
-  filename: path.resolve(__dirname, './global.db'),
+  filename: path.resolve(__dirname, './data/global.db'),
   autoload: true
 })
 
 db.wechat = datastore({
-  filename: path.resolve(__dirname, './wechat.db'),
+  filename: path.resolve(__dirname, './data/wechat.db'),
   autoload: true
 })
 
 db.docs = datastore({
-  filename: path.resolve(__dirname, './docs.db'),
+  filename: path.resolve(__dirname, './data/docs.db'),
   autoload: true
 })
 
 module.exports = (namespace) => {
   if (!db[namespace]) {
     db[namespace] = datastore({
-      filename: path.resolve(__dirname, './' + namespace + '.db'),
+      filename: path.resolve(__dirname, './data/' + namespace + '.db'),
       autoload: true
     })
   }
