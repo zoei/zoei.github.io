@@ -36,7 +36,7 @@ module.exports = (root, options) => {
   }
 
   return async (ctx, next) => {
-    ctx.render = renderVue(ctx, next)
+    ctx.renderVue = renderVue(ctx, next)
     ctx.renderApp = renderVueApp(ctx, next)
     await next()
   }

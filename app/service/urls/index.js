@@ -39,7 +39,7 @@ export function getApiUrl(module, version = 'v1', api, params) {
 
   const config = configure[module][version]
   const resfulUrl = config[api]
-  return format((getHost() + '/' + module + resfulUrl), params)
+  return format((getHost() + '/api/' + module + resfulUrl), params)
 }
 
 export function getUrl(api) {

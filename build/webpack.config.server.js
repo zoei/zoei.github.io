@@ -32,6 +32,12 @@ export default {
     // you should also whitelist deps that modifies `global` (e.g. polyfills)
     whitelist: /\.css$/
   }),
+  // resolve: {
+  //   alias: {
+  //     File: path.resolve(__dirname, './server-alias/File.js')
+  //   }
+  // },
+  // externals: ['File'],
   plugins: [
     // new CleanWebpackPlugin([path.basename(OUTPUT_DIR)], {
     //   root: path.dirname(OUTPUT_DIR)

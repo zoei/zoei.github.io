@@ -5,7 +5,7 @@ import config from './webpack.config.base'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const HOST = process.env.HOST || '0.0.0.0'
-const PORT = process.env.PORT || 18080 
+const PORT = process.env.PORT || 18082 
 const PUBLIC_PATH = process.env.path || ''
 
 export default {

@@ -20,22 +20,12 @@
 <template>
   <div class="page-home">
     <home-header />
-    <div>{{user.userId}}</div>
-    <div class="md-editor">
-      <textarea v-model="mdtext" class="md-input"/>
-      <div class="md-preview"><div class="markdown" ref="md"></div></div>
-    </div>
   </div>
 </template>
 
 <script>
-      // <pre class="md-preview"><code class="markdown" ref="md"></code></pre>
   import { mapState } from 'vuex'
   import HomeHeader from '../components/Header.vue'
-  import marked from 'marked'
-  import hljs from 'highlight.js'
-  import types from '../store/mutation-types'
-  // import Prism from 'prismjs'
 
   export default {
     name: 'home',
@@ -44,43 +34,21 @@
     },
     data () {
       return {
-        mdtext: ``
       }
     }, 
     components: {
       HomeHeader
     },
     created() {
-      marked.setOptions({
-        renderer: new marked.Renderer(),
-        gfm: true,
-        tables: true,
-        breaks: false,
-        pedantic: false,
-        sanitize: true,
-        smartLists: true,
-        smartypants: false,
-        highlight: function (code, lang = 'bash') {
-          // return Prism.highlight(code, Prism.languages[lang])
-          return hljs.highlightAuto(code).value
-        }
-      })
     },
     mounted() {
-      // hljs.initHighlightingOnLoad()
     },
     asyncData ({ store, route: { params: { id }}}) {
       return store.dispatch(types.GET_USER, { id })
     },
     computed: {
-      user () {
-        return this.$store.state.wanyuan.users[this.$route.params.id] || {}
-      }
     },
     watch: {
-      mdtext(v) {
-        this.$refs.md.innerHTML = marked(v)
-      }
     },
     methods: {
     }

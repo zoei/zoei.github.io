@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { actions } from './actions'
 import * as getters from './getters'
-import wanyuan from './modules/wanyuan'
+import saveMarkdown from './modules/doc'
 import createLogger from './plugins/logger'
 
 Vue.use(Vuex)
@@ -13,7 +13,7 @@ export default new Vuex.Store({
   actions,
   getters,
   modules: {
-    wanyuan
+    saveMarkdown
   },
   // strict: debug,
   plugins: debug ? [createLogger()] : []

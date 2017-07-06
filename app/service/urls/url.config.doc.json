@@ -1,0 +1,10 @@
+{
+  "module": "doc",
+  "v1": {
+    "CreateDoc": "/",
+    "UpdateDoc": "/",
+    "DeleteDoc": "/{id}",
+    "GetDocs": "/?start={start}&limit={limit}&last={last}",
+    "GetDoc": "/{id}"
+  }
+}

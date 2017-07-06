@@ -14,4 +14,17 @@ db.wechat = datastore({
   autoload: true
 })
 
-module.exports = db
+db.docs = datastore({
+  filename: path.resolve(__dirname, './docs.db'),
+  autoload: true
+})
+
+module.exports = (namespace) => {
+  if (!db[namespace]) {
+    db[namespace] = datastore({
+      filename: path.resolve(__dirname, './' + namespace + '.db'),
+      autoload: true
+    })
+  }
+  return db[namespace]
+}
