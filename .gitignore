@@ -8,5 +8,5 @@ dist/
 .vscode
 fe-portal
 settings.json
-static/*/
+static/docs/
 db/data/
