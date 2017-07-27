@@ -28,8 +28,8 @@ module.exports = (app) => {
       viewRoot: path.resolve('views')
     }))
     .use(vue(path.resolve(__dirname, '../views'), {
-      appBundle: path.resolve('static/vue-ssr-server-bundle.json'),
-      clientManifest: path.resolve('static/vue-ssr-client-manifest.json')
+      appBundle: path.resolve('static/home/vue-ssr-server-bundle.json'),
+      clientManifest: path.resolve('static/home/vue-ssr-client-manifest.json')
     }))
     .use(bodyParser({
       extendTypes: {

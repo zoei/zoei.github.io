@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development nodemon --exec babel-node index",
+    "prod": "NODE_ENV=production nodemon --exec babel-node index",
     "devserver": "NODE_ENV=development node -r babel-register node_modules/.bin/webpack-dev-server --config build/webpack.config.dev.js",
     "bclient": "NODE_ENV=production node -r babel-register node_modules/webpack/bin/webpack --config build/webpack.config.release.js --optimize-minimize",
     "bserver": "NODE_ENV=production node -r babel-register node_modules/webpack/bin/webpack --config build/webpack.config.server.js --optimize-minimize"
