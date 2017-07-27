@@ -8,8 +8,8 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 import config from './webpack.config.base'
 import pkg from '../package.json'
 
-const OUTPUT_DIR = path.resolve('./static')
-const PUBLIC_PATH = '/static'
+const OUTPUT_DIR = path.resolve('./static/home')
+const PUBLIC_PATH = '/static/home'
 
 export default {
   ...config,
@@ -62,7 +62,7 @@ export default {
     //   }
     // }),
     new HtmlWebpackPlugin({
-      filename: 'index.html',
+      filename: path.resolve(__dirname, '../views/home.html'),
       template: './template.release.html',
       inject: 'body',
       hash: true

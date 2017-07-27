@@ -9,13 +9,13 @@ const VueSSRServerPlugin = require('vue-server-renderer/server-plugin')
 import config from './webpack.config.base'
 import pkg from '../package.json'
 
-const OUTPUT_DIR = path.resolve('./static')
+const OUTPUT_DIR = path.resolve('./static/home')
 const PUBLIC_PATH = '/'
 
 export default {
   ...config,
   entry: {
-    app: ['babel-polyfill', './app/entry-server.js']
+    app: ['./app/entry-server.js']
   },
   target: 'node',
   devtool: 'source-map',
