@@ -1,6 +1,19 @@
 <style lang="stylus">
   .page-docs
     height 100%
+    ul li
+      margin-bottom: 40px;
+      font-size: 16px;
+      .info
+        color: #6b6b6b;
+      .title
+        font-size: 24px;
+        color: #000;
+      .author
+        font-size 18px
+        color: #6b6b6b;
+      .summary
+        color: #666;
     .btn-del,.btn-mod
       cursor pointer
       margin-left 20px
@@ -8,12 +21,16 @@
 
 <template>
   <div class="page-docs">
-    <home-header />
+    <router-link to="/doc/new"><i class="fa fa-plus"></i></router-link>
     <ul>
-      <li v-for="doc in docList">
-        <a :href="'/doc/' + doc.id">{{doc.title}} - {{doc.author}}</a>
-        <a class="btn-del" @click="deleteDoc(doc.id)">x</a>
-        <router-link :to="'/doc/' + doc.id + '/modify'"><a class="btn-mod">E</a></router-link>
+      <li v-for="doc in docList" :key="doc.id">
+        <a :href="'/doc/' + doc.id" class="title">{{doc.title}}</a>
+        <div class="info">
+          <span>{{doc.author}} : {{new Date(doc.createTime).toLocaleString()}}</span>
+          <a class="btn-del" v-if="authentic" @click="deleteDoc(doc.id)"><i class="fa fa-remove"></i></a>
+          <router-link v-if="authentic" :to="'/doc/' + doc.id + '/modify'" class="btn-mod"><i class="fa fa-edit"></i></router-link>
+         </div>
+         <p>{{doc.summary}}</p>
       </li>
     </ul>
   </div>
@@ -21,7 +38,6 @@
 
 <script>
   import { mapState } from 'vuex'
-  import HomeHeader from '../components/Header.vue'
 
   export default {
     metaInfo: {
@@ -33,7 +49,6 @@
       }
     }, 
     components: {
-      HomeHeader
     },
     async created() {
       let payload = await this.$store.dispatch('getDocs', { start: 1, limit: 10 })
@@ -42,6 +57,9 @@
     mounted() {
     },
     computed: {
+      ...mapState({
+        authentic(state) { return state.authentic }
+      })
     },
     watch: {
     },

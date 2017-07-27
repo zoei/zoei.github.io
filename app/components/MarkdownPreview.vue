@@ -18,7 +18,7 @@
 
 <script>
   import marked from 'marked'
-  import '../styles/dinky.css'
+  // import '../styles/dinky.css'
 
   export default {
     props: ['id'],
@@ -30,7 +30,7 @@
     components: {
     },
     created() {
-      fetch('http://z.me' + this.filePath).then(res=>res.text()).then(res=>this.mdtext=res)
+      fetch(this.filePath).then(res=>res.text()).then(res=>this.mdtext=res)
     },
     mounted() {
       let renderer = new marked.Renderer()

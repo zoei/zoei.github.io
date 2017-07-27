@@ -1,0 +1,7 @@
+{
+  "module": "user",
+  "v1": {
+    "Signin": "/signin",
+    "Signup": "/signup"
+  }
+}

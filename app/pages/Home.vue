@@ -19,13 +19,11 @@
 
 <template>
   <div class="page-home">
-    <home-header />
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import HomeHeader from '../components/Header.vue'
 
   export default {
     name: 'home',
@@ -37,14 +35,10 @@
       }
     }, 
     components: {
-      HomeHeader
     },
     created() {
     },
     mounted() {
-    },
-    asyncData ({ store, route: { params: { id }}}) {
-      return store.dispatch(types.GET_USER, { id })
     },
     computed: {
     },

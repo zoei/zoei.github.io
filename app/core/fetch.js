@@ -63,10 +63,6 @@ export default function getWrappedFetch(url, config) {
         error.message = '网络无法连接'
       }
       logger.error(error)
-      if (error.code !== undefined) {
-        error.status = error.code
-        error.message = error.msg
-      }
       wrappedPromise.reject(error)
     })
   return wrappedPromise

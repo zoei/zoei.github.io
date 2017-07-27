@@ -1,21 +1,22 @@
-var mongoose = require('mongoose')
+const db = require('../db')
+const User = db('user')
 
-const UserSchema = new mongoose.Schema({
-  userid: String,
-  username: String,
-  password: String
-})
-
-UserSchema.methods = {
-}
-
-UserSchema.statics = {
-  add(data) {
-    return new User(data).save().exec()
-  },
-  get(query) {
-    return this.findOne(query).exec()
+class UserSchema {
+  constructor() {
+    // User.insert({ username: 'zoei', password: 'zoei' })
+  }
+  add(user) {
+    return User.insert(user)
+  }
+  update(condition, user) {
+    return User.update(condition, { $set: user })
+  }
+  get(condition) {
+    return User.findOne(condition)
+  }
+  getUsers(condition) {
+    return User.find(condition)
   }
 }
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = new UserSchema()

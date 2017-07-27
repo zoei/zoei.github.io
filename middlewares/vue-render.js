@@ -1,4 +1,4 @@
-const { renderComponent, renderApp } = require('./vue')
+const { renderComponent, renderApp } = require('./vuessr')
 const minifier = require('html-minifier').minify
 
 module.exports = (root, options) => {

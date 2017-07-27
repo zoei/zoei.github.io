@@ -2,11 +2,7 @@ import format from 'string-template'
 
 var configure = {}
 
-if (process.env.NODE_ENV === 'development') {
-  configure.global = require('./url.config.development.json')
-} else {
-  configure.global = require('./url.config.production.json')
-}
+configure.global = require('./url.config.json')
 
 /**
  * (description)
@@ -35,10 +31,16 @@ export function getHost() {
  * @returns (description)
  */
 export function getApiUrl(module, version = 'v1', api, params) {
+  let config
+  let resfulUrl
+  if (!module) {
+    config = configure['global'][version]
+    resfulUrl = config[api]
+    return format((getHost() + '/api/' + resfulUrl), params)
+  }
   if (!configure[module]) configure[module] = require(`./url.config.${module}.json`)
-
-  const config = configure[module][version]
-  const resfulUrl = config[api]
+  config = configure[module][version]
+  resfulUrl = config[api]
   return format((getHost() + '/api/' + module + resfulUrl), params)
 }
 

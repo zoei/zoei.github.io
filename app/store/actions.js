@@ -1,9 +1,14 @@
+import commonService from '../service/CommonService'
 import Logger from '../core/logger'
 const logger = new Logger('Actions')
-import * as types from './mutation-types'
+import types from './mutation-types'
+
+const {
+  AUTH
+} = types
 
 export const actions = {
-
+  auth: createApiAction(AUTH, commonService.auth),
 }
 
 /**

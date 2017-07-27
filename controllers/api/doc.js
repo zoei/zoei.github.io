@@ -21,7 +21,9 @@ module.exports = {
                 fileName,
                 url: '/static/docs/' + fileName,
                 title,
-                author
+                author,
+                summary: content.split('\n')[0],
+                createTime: Date.now()
               }
             })
           }
@@ -41,6 +43,13 @@ module.exports = {
     const { id, title, author, content } = ctx.request.body
     let fileName = id + '.md'
     try {
+      let doc = await docs.findOne({ id })
+      if (!doc) {
+        return ctx.sendJSON({
+          code: -1001,
+          msg: '文件不存在'
+        })
+      }
       let d = await new Promise((resolve, reject) => {
         fs.writeFile(ctx.docDir + '/' + fileName, content, function(err, data){
           if (err) {
@@ -54,14 +63,16 @@ module.exports = {
                 fileName,
                 url: '/static/docs/' + fileName,
                 title,
-                author
+                author,
+                summary: content.split('\n')[0],
+                updateTime: Date.now()
               }
             })
           }
         })
       })
       await docs.update({ id }, { $set: d.data })
-      ctx.sendJSON(d)
+      ctx.sendJSON({ ...d, data: { ...doc, ...d.data } })
     } catch (e) {
       console.log('e', e)
       ctx.sendJSON({

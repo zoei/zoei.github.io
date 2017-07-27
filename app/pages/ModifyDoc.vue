@@ -1,19 +1,25 @@
 <style lang="stylus">
-  .page-new-doc
+.page
+  .doc-editor
     height 100%
 </style>
 
 <template>
-  <div class="page-home">
-    <home-header />
-    <markdown-editor v-if="title && content" :init-id="id" :init-title="title" :init-author="author" :init-content="content" />
+  <div class="">
+    <doc-editor
+      v-if="title && content"
+      :init-id="id"
+      :init-title="title"
+      :init-author="author"
+      :init-content="content"
+      @save="save"
+    />
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import HomeHeader from '../components/Header.vue'
-  import MarkdownEditor from '../components/MarkdownEditor.vue'
+  import DocEditor from '../components/DocEditor.vue'
 
   export default {
     metaInfo: {
@@ -28,11 +34,10 @@
       }
     }, 
     components: {
-      HomeHeader,
-      MarkdownEditor
+      DocEditor
     },
     async created() {
-      fetch('http://z.me/static/docs/' + this.id + '.md').then(res=>res.text()).then(res=>this.content=res)
+      fetch('/static/docs/' + this.id + '.md').then(res=>res.text()).then(res=>this.content=res)
       let payload = await this.$store.dispatch('getDoc', { id: this.id })
       const { title, author } = payload.data
       this.title = title
@@ -45,6 +50,11 @@
     watch: {
     },
     methods: {
+      async save({ title, author, content }) {
+        const { id } = this
+        let payload = await this.$store.dispatch('updateDoc', { id, title, author, content })
+        this.$router.push('/doc/' + payload.data.id)
+      }
     }
   }
 </script>

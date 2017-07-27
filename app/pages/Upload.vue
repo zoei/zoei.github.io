@@ -1,11 +1,8 @@
 <style lang="stylus">
-  .page-upload
-    height 100%
 </style>
 
 <template>
-  <div class="page-upload">
-    <home-header />
+  <div class="">
     <div>{{user.userId}}</div>
     <div id="container">
       <a id="pickfiles" href="javascript:;">选择文件</a>
@@ -20,7 +17,6 @@
 </template>
 
 <script>
-  import HomeHeader from '../components/Header.vue'
   import config from '../config'
   import types from '../store/mutation-types'
 
@@ -38,7 +34,6 @@
       }
     }, 
     components: {
-      HomeHeader
     },
     mounted() {
       // this.initUploader()

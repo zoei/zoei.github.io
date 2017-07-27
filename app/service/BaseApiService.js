@@ -5,22 +5,11 @@ import Logger from '../core/logger'
 const logger = new Logger('fetch')
 
 export const COMMON_STATUS = {
-  ACCESS_FORBID: 300000,	// 禁止访问
-  GENERAL: -40000,	// 一般请求错误
-  PARAMETER: -40001,	// 参数格式错误
-  DATA_NOT_FOUND: -40402,	// 所请求数据不存在
-  AUTHENTICATE: -40100,	// 认证错误
-  SENSITIVE_WORDS: -40200,	// 敏感词错误
-  RESOURCE_NOT_FOUND: -40400,	// 资源不存在
-  SERVER_CONFIG: -50001,	// 服务器配置错误
-
-  RESPONSE_IS_EMPTY: -9001,	// 响应为空
-  CLIENT_ERROR: -9002,	// 认证错误
-  SERVER_ERROR: -9003,	// 服务器错误
   EXCEPTION: -9999	// 异常
 }
 
 export const HTTP_STATUS = {
+  OK: 200,
   CLIENT_ERROR: 400,	// 客户端错误
   AUTHENTICATE: 401,	// 认证错误
   SERVER_ERROR: 500	// 服务器错误
@@ -72,39 +61,38 @@ export default class BaseApiService extends EventEmitter {
   async fetch(api, args, config, apiCfg) {
     try {
       let res = await this.fetchApi(api, args, config)
-      let httpStatus = res.status
+      let status = res.status
 
-      if (httpStatus === HTTP_STATUS.AUTHENTICATE) {
-        return Promise.reject({ status: COMMON_STATUS.AUTHENTICATE, data: null, message: '认证错误' })
-      } else if (httpStatus === HTTP_STATUS.CLIENT_ERROR) {
-        return Promise.reject({ status: COMMON_STATUS.CLIENT_ERROR, data: null, message: COMMON_ERROR_MESSAGE })
-      } else if (httpStatus === HTTP_STATUS.SERVER_ERROR) {
-        return Promise.reject({ status: COMMON_STATUS.SERVER_ERROR, data: null, message: COMMON_ERROR_MESSAGE })
-      } else if (httpStatus !== 200) {
+      if (status !== HTTP_STATUS.OK) {
         if (!navigator.onLine) {
-          return Promise.reject({ status, data: null, message: '网络无法连接' })
+          return Promise.reject({ code: status, success: false, message: '网络无法连接' })
         }
-        return Promise.reject({ status, data: null, message: COMMON_ERROR_MESSAGE })
+        return Promise.reject({ code: status, success: false, message: res.statusText })
       }
 
-      res = await res.json()
-      let { status, message, code, msg, success, ...others } = res
-      if (code !== undefined) {
-        status = (typeof success !== 'undefined' && success) || status == '200' ? 0 : parseInt(code)
-        message = msg
+      let contentType = res.headers.get('Content-Type')
+      let payload
+      if (contentType.indexOf('application/json') !== -1) {
+        payload = await res.json()
+        payload = payload || { code: COMMON_STATUS.RESPONSE_IS_EMPTY, success: false, message: COMMON_ERROR_MESSAGE }
+      } else if (contentType.indexOf('text') !== -1) {
+        payload = await res.text()
+        if (payload) {
+          payload = { code: 0, success: true, data: payload }
+        } else {
+          payload = { code: COMMON_STATUS.RESPONSE_IS_EMPTY, success: false, message: COMMON_ERROR_MESSAGE }
+        }
       }
-      res = res || { status: COMMON_STATUS.RESPONSE_IS_EMPTY, message: COMMON_ERROR_MESSAGE }
 
-      if (status !== 0) {
-        return Promise.reject({ status, message, ...others })
+      if (payload.code !== 0) {
+        return Promise.reject(payload)
       }
-
-      return Promise.resolve({ message, ...others })
+      return Promise.resolve(payload)
     } catch (e) {
       if (process.env.NODE_ENV === 'development') {
         console.error(e)
       }
-      return Promise.reject({ status: COMMON_STATUS.EXCEPTION, message: e.message })
+      return Promise.reject({ code: COMMON_STATUS.EXCEPTION, success: false, message: e.message })
       logger.error(e)
     }
   }

@@ -1,19 +1,18 @@
 <style lang="stylus">
-  .page-new-doc
+.page
+  .doc-editor
     height 100%
 </style>
 
 <template>
-  <div class="page-home">
-    <home-header />
-    <markdown-editor />
+  <div class="">
+    <doc-editor @save="save"/>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import HomeHeader from '../components/Header.vue'
-  import MarkdownEditor from '../components/MarkdownEditor.vue'
+  import DocEditor from '../components/DocEditor.vue'
 
   export default {
     metaInfo: {
@@ -24,8 +23,7 @@
       }
     }, 
     components: {
-      HomeHeader,
-      MarkdownEditor
+      DocEditor
     },
     mounted() {
     },
@@ -34,6 +32,10 @@
     watch: {
     },
     methods: {
+      async save({ title, author, content}) {
+        let payload = await this.$store.dispatch('createDoc', { title, author, content })
+        this.$router.push('/doc/' + payload.data.id)
+      }
     }
   }
 </script>

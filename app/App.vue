@@ -1,19 +1,19 @@
 <style lang="stylus">
 .page
-  max-width: 1280px
+  width: 768px
   margin: 0 auto
-.page-doc
-  max-width: 960px
-  margin: 0 auto
+  flex 1
 </style>
 
 <template>
   <div class="app">
-    <router-view class="page"></router-view>
+    <app-header />
+    <router-view class="page page-under-header"></router-view>
   </div>
 </template>
 
 <script>
+  import AppHeader from './components/Header.vue'
   import { getContext } from './context'
 
   export default {
@@ -23,8 +23,10 @@
       }
     },
     components: {
+      AppHeader
     },
     created() {
+      this.$store.dispatch('auth')
     },
     ready() {
     },

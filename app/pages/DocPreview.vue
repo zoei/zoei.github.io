@@ -1,18 +1,14 @@
 <style lang="stylus">
-  .page-new-doc
-    height 100%
 </style>
 
 <template>
-  <div class="page-doc">
-    <home-header />
+  <div class="">
     <markdown-preview :id="id"/>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import HomeHeader from '../components/Header.vue'
   import MarkdownPreview from '../components/MarkdownPreview.vue'
 
   export default {
@@ -25,7 +21,6 @@
       }
     }, 
     components: {
-      HomeHeader,
       MarkdownPreview
     },
     created() {
