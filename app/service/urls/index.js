@@ -13,11 +13,7 @@ configure.global = require('./url.config.json')
  */
 export function getHost() {
   if (process.env.HOST) return '//' + process.env.HOST
-
-  if (process.env.NODE_ENV === 'development') {
-    // return '//localhost:3020'
-    return location.origin
-  }
+  return location.origin
 }
 
 /**
