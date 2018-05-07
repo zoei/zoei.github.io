@@ -1,0 +1,6 @@
+./data/
+./temp/
+./dist/
+./.eslintrc
+./.gitignore
+./gulpfile.js

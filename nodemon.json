@@ -1,5 +1,5 @@
 {
   "verbose": true,
-  "ignore": [".vscode/", "static/"],
+  "ignore": [".vscode/", "static/", "client/", "data/"],
   "ext":"js html"
 }

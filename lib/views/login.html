@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="shortcut icon" href="//f1.ct.hjfile.cn/image/basic/201607/16155641763f83e.png"/>
+  <link rel="bookmark" href="//f1.ct.hjfile.cn/image/basic/201607/16155641763f83e.png"/>
+  <title>酌酒花间 - 登录</title>
+  <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=3857479967&debug=true" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <form>
+        <input id="username" type="text" name="username">
+        <input id="password" type="password" name="password">
+        <button id="submit" type="button">登录</button>
+        <wb:login-button type="3,2" onlogin="login" onlogout="logout"></wb:login-button>
+        <div id="result"></div>
+    </form>
+    <script>
+        WB2.anyWhere(function(W){
+            W.parseCMD("/users/show.json", function(sResult, bStatus) {
+                try {
+                    //to do something...
+                } catch(e) {}
+            }, {
+                uid: '123456789'
+            }, {
+                method: 'get'
+            })
+        });
+        document.querySelector('#submit').addEventListener('click', ()=>{
+            fetch('/api/pass/login', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    username: document.querySelector('#username').value,
+                    password: document.querySelector('#password').value
+                })
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                if (res.code === 0) {
+                    document.querySelector('#result').innerHTML = JSON.stringify(res.data)
+                    // location.href = '/auth'
+                } else {
+                    document.querySelector('#result').innerHTML = res.message
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        })
+    </script>
+</body>
+</html>

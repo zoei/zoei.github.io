@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="//f1.ct.hjfile.cn/image/basic/201607/16155641763f83e.png"/>
+  <link rel="bookmark" href="//f1.ct.hjfile.cn/image/basic/201607/16155641763f83e.png"/>
+  <title>cos文件上传</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+  <input id="file-selector" type="file">
+  <div id="result"></div>
+  <a id="url" href="#" target="_blank"></a>
+  <script src="/public/lib/cos-js-sdk-v4.js"></script>
+  <script>
+    var bucket = 'zoeicc';
+    var appid = '1251698524';
+
+    // 初始化实例
+    var cos = new CosCloud({
+        appid: '1251698524',// APPID 必填参数
+        bucket: 'zoeicc',//bucketName 必填参数
+        region: 'sh',//地域信息 必填参数 华南地区填gz 华东填sh 华北填tj
+        getAppSign: function (callback) {//获取签名 必填参数
+            //填上获取单次签名的逻辑
+            fetch('/qc/costoken')
+            .then(res=>res.json())
+            .then(res=>{
+                callback(res.data)
+            })
+        },
+        getAppSignOnce: function (callback) {//单次签名，必填参数，参考上面的注释即可
+            //填上获取单次签名的逻辑
+            fetch('/costoken')
+            .then(res=>res.json())
+            .then(res=>{
+                callback(res.data)
+            })
+        }
+    });
+
+    // 监听选文件
+    document.getElementById('file-selector').onchange = function () {
+        var file = this.files[0];
+        if (!file) return;
+
+        // 分片上传文件
+        cos.uploadFile(
+        res => {
+            console.log('success', res)
+            document.querySelector('#result').innerHTML = JSON.stringify(res.data)
+            let link = document.querySelector('#url')
+            console.log('link', link)
+            link.innerText = res.data.source_url
+            link.setAttribute('href', res.data.source_url)
+        },
+        data=>{
+            console.log('error', data)
+        },
+        data=>{
+            console.log('progress', data)
+        }, bucket, '/test/' + file.name, file, 0);
+    };
+  </script>
+  </body>
+</html>

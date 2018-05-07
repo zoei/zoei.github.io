@@ -1,0 +1,16 @@
+{
+  "presets": [
+    ["env", {
+      "target": {
+        "browsers": ["Android >= 5.0", "IE 9", "Chrome > 43"],
+        "debug": false,
+        "useBuiltIns": "usage"
+      }
+    }]
+  ],
+  "plugins": [
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-decorators-legacy"
+  ]
+}

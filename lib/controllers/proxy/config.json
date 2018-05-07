@@ -1,0 +1,29 @@
+{
+    "domins": {
+      "dev": [
+          "devwww.cctalk.com",
+          "dev1www.cctalk.com",
+          "dev2www.cctalk.com",
+          "dev3www.cctalk.com"
+      ],
+      "qa": [
+          "qawww.cctalk.com",
+          "qa1www.cctalk.com",
+          "qa2www.cctalk.com",
+          "qa3www.cctalk.com",
+          "qa4www.cctalk.com",
+          "qa5www.cctalk.com",
+          "qa6www.cctalk.com",
+          "qa7www.cctalk.com",
+          "qa8www.cctalk.com"
+      ],
+      "yz": [
+          "yzres.hjfile.cn",
+          "yzwww.cctalk.com"
+      ],
+      "release": [
+          "res.hjfile.cn",
+          "www.cctalk.com"
+      ]
+    }
+}
